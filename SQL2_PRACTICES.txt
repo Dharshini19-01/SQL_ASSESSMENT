@@ -1,0 +1,228 @@
+-- CREATE TABLE EMPLOYEES
+COMMAND : create table employees( empid int primary key auto_increment, empname varchar(30),deptid int,salary int);
+
+-- INSERT TABLE EMPLYEES
+COMMAND : insert into employees (empname,deptid,salary) values('arun',101,45000),('bhavya',102,52000),('chitra',101,47000),('dinesh',103,39000),('esha',null,41000),('farhan',104,55000);
+
+--DISPLAY TABLE EMPLOYEES
+COMMANDS : select * from employees;
+
+OUTPUT :
++-------+---------+--------+--------+
+| empid | empname | deptid | salary |
++-------+---------+--------+--------+
+|     1 | arun    |    101 |  45000 |
+|     2 | bhavya  |    102 |  52000 |
+|     3 | chitra  |    101 |  47000 |
+|     4 | dinesh  |    103 |  39000 |
+|     5 | esha    |   NULL |  41000 |
+|     6 | farhan  |    104 |  55000 |
++-------+---------+--------+--------+
+
+-- CREATE TABLE DEPARTMENTS
+COMMANDS : create table departments( deptid int, deptname varchar(30));
+
+-- INSERT VALUES DEPARTMENTS
+COMMANDS :  insert into departments (deptid,deptname) values(101,'sales'),(102,'hr'),(103,'it'),(105,'marketing');
+
+-- DISPLAY TABLE DEPARTMENTS
+COMMANDS : select * from departmentS;
+
+OUTPUT:
++--------+-----------+
+| deptid | deptname  |
++--------+-----------+
+|    101 | sales     |
+|    102 | hr        |
+|    103 | it        |
+|    105 | marketing |
++--------+-----------+
+
+-- INNER JOINS
+COMMANDS: select e.empname,d.deptname,e.salary from employees as e inner join departments as d on e.deptid=d.deptid;
+
+OUTPUT:
++---------+----------+--------+
+| empname | deptname | salary |
++---------+----------+--------+
+| arun    | sales    |  45000 |
+| bhavya  | hr       |  52000 |
+| chitra  | sales    |  47000 |
+| dinesh  | it       |  39000 |
++---------+----------+--------+
+
+
+-- LEFT JOINS
+COMMANDS: select e.empid,e.empname,e.salary,d.deptname from employees as e left join departments as d on e.deptid=d.deptid;
+
+OUTPUT:
++-------+---------+--------+----------+
+| empid | empname | salary | deptname |
++-------+---------+--------+----------+
+|     1 | arun    |  45000 | sales    |
+|     2 | bhavya  |  52000 | hr       |
+|     3 | chitra  |  47000 | sales    |
+|     4 | dinesh  |  39000 | it       |
+|     5 | esha    |  41000 | NULL     |
+|     6 | farhan  |  55000 | NULL     |
++-------+---------+--------+----------+
+
+
+-- RIGHT JOINS
+COMMANDS: select e.empname,d.deptname,e.salary from employees as e right join departments as d on e.deptid = d.deptid;
+
+OUTPUT:
++---------+-----------+--------+
+| empname | deptname  | salary |
++---------+-----------+--------+
+| chitra  | sales     |  47000 |
+| arun    | sales     |  45000 |
+| bhavya  | hr        |  52000 |
+| dinesh  | it        |  39000 |
+| NULL    | marketing |   NULL |
++---------+-----------+--------+
+
+
+-- FULL JOINS
+COMMANDS: select e.empname,deptname,e.salary from employees as e left join departments as d on e.deptid=d.deptid union select e.empname,d.deptname,e.salary from employees as e right join departments as d on e.deptid=d.deptid;
+
+OUTPUT:
++---------+-----------+--------+
+| empname | deptname  | salary |
++---------+-----------+--------+
+| arun    | sales     |  45000 |
+| bhavya  | hr        |  52000 |
+| chitra  | sales     |  47000 |
+| dinesh  | it        |  39000 |
+| esha    | NULL      |  41000 |
+| farhan  | NULL      |  55000 |
+| NULL    | marketing |   NULL |
++---------+-----------+--------+
+
+
+-- LEFT ANTI JOINS
+COMMANDS: select e.empid,e.empname,e.deptid,e.salary from employees as e left join departments as d on e.deptid=d.deptid where d.deptid is null;
+
+OUTPUT:
++-------+---------+--------+--------+
+| empid | empname | deptid | salary |
++-------+---------+--------+--------+
+|     5 | esha    |   NULL |  41000 |
+|     6 | farhan  |    104 |  55000 |
++-------+---------+--------+--------+
+
+
+-- RIGHT ANTI JOINS
+COMMANDS: select d.deptid,d.deptname from employees as e right join departments as d on e.deptid=d.deptid where e.empid is null;
+
+OUTPUT:
++--------+-----------+
+| deptid | deptname  |
++--------+-----------+
+|    105 | marketing |
++--------+-----------+
+
+--INNER JOIN TO ALTERNATIVE METHOD
+COMMANDS:select e.empname,d.deptname,e.salary from employees as e,departments as d where e.deptid=d.deptid;
+
+OUTPUT:
++---------+----------+--------+
+| empname | deptname | salary |
++---------+----------+--------+
+| arun    | sales    |  45000 |
+| bhavya  | hr       |  52000 |
+| chitra  | sales    |  47000 |
+| dinesh  | it       |  39000 |
++---------+----------+--------+
+
+--LEFT JOIN TO RIGHT JOIN
+COMMANDS:select e.empname,d.deptname,e.salary from departments as d right join employees as e on e.deptid=d.deptid;
+
+OUTPUT:
++---------+----------+--------+
+| empname | deptname | salary |
++---------+----------+--------+
+| arun    | sales    |  45000 |
+| bhavya  | hr       |  52000 |
+| chitra  | sales    |  47000 |
+| dinesh  | it       |  39000 |
+| esha    | NULL     |  41000 |
+| farhan  | NULL     |  55000 |
++---------+----------+--------+
+
+
+--RIGHT JOIN TO LEFT JOIN
+COMMANDS: select e.empname,d.deptname,e.salary from departments as d left join employees as e on e.deptid=d.deptid;
+
+OUTPUT:
++---------+-----------+--------+
+| empname | deptname  | salary |
++---------+-----------+--------+
+| chitra  | sales     |  47000 |
+| arun    | sales     |  45000 |
+| bhavya  | hr        |  52000 |
+| dinesh  | it        |  39000 |
+| NULL    | marketing |   NULL |
++---------+-----------+--------+
+
+
+-- CROSS JOIN
+COMMANDS:select e.empname,d.deptname from employees as e cross join departments as d;
+
+OUTPUT:
++---------+-----------+
+| empname | deptname  |
++---------+-----------+
+| arun    | marketing |
+| arun    | it        |
+| arun    | hr        |
+| arun    | sales     |
+| bhavya  | marketing |
+| bhavya  | it        |
+| bhavya  | hr        |
+| bhavya  | sales     |
+| chitra  | marketing |
+| chitra  | it        |
+| chitra  | hr        |
+| chitra  | sales     |
+| dinesh  | marketing |
+| dinesh  | it        |
+| dinesh  | hr        |
+| dinesh  | sales     |
+| esha    | marketing |
+| esha    | it        |
+| esha    | hr        |
+| esha    | sales     |
+| farhan  | marketing |
+| farhan  | it        |
+| farhan  | hr        |
+| farhan  | sales     |
++---------+-----------+
+
+
+-- SELF JOINS
+COMMANDS:
+alter table employees add managerid int;
+
+update employees set managerid=null where empid=1;
+update employees set managerid=1 where empid=2;
+update employees set managerid=1 where empid=3;
+update employees set managerid=2 where empid=4;
+update employees set managerid=3 where empid=5;
+update employees set managerid=4 where empid=6;
+
+select e.empname,m.empname from employees as e join employees m on e.managerid=m.empid;
+
+OUTPUT:
++---------+---------+
+| empname | empname |
++---------+---------+
+| bhavya  | arun    |
+| chitra  | arun    |
+| dinesh  | bhavya  |
+| esha    | chitra  |
+| farhan  | dinesh  |
++---------+---------+
+
+
+
